@@ -41,8 +41,9 @@
   } */
 
   .filter {
-    font-size: 0.75vw;
+    font-size: 0.65vw;
     font-family: Garamond, serif;
+    color: #ffffff;
     width: 15vh;
     height: 90vh;
     background-color: #85aba8;

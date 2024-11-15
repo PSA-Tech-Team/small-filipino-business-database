@@ -3,6 +3,11 @@
     flex-direction: row;
 }
 
+.columnContainer{
+    display: flex;
+    flex-direction: column;
+}
+
 .Filter_Bar {
     flex: 1;              /* Adjust this to control the width */
     margin-right:20px;    /* Add spacing between the Filter_Bar and cards */
@@ -13,4 +18,17 @@
     display: flex;
     flex-wrap: wrap;       /* Allows the cards to wrap to the next row if needed */
     gap: 20px;             /* Adds spacing between individual cards */
+}
+
+.SortComponent{
+    font-size: 0.15vw;
+    font-family: Garamond, serif;
+    color: #ffff;
+    text-align:center;
+}
+
+.sorting{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }

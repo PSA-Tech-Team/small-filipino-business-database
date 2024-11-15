@@ -1,0 +1,11 @@
+.sorting{
+    margin:auto;
+    font-size: 1.5vw;
+    font-family: Garamond, serif;
+    color: #ffffff;
+    padding-top: 0.25cm;
+}
+
+.sorting sort_component{
+    padding-left: 3cm;
+}
