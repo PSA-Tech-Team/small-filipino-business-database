@@ -8,6 +8,10 @@
     background-color: #85aba8;
 }
 
+.card:hover {
+    cursor: pointer;
+}
+
 .card-business-name {
     font-size: 3em;
     font-family: Garamond, serif;
@@ -38,14 +42,14 @@
     padding: 10;
   }
   
-  .card-settings-button-dot {
+.card-settings-button-dot {
     height: 8px;
     width: 8px;
     background-color: #333; /* Color of the dots */
     border-radius: 50%;
     margin: 2px 0; /* Space between dots */
-  }
+}
 
-  .card-settings-menu {
+.card-settings-menu {
     display:none;
-  }
+}

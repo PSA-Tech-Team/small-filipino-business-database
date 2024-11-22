@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
 import "./Card_Component.css";
 
-function CardComponent() {
+function CardComponent( {buisnessName, rating, description} ) {
     return (
+        <Link to="/business">
         <button className="card" type="button" onclick="document.getElementById('card-settings-menu').style.display='block'">
             <div>
                 <img className='card-image' src="https://www.psauiuc.org/wp-content/uploads/2024/09/Logo-no-words-no-circle-300x300.png" alt="Philippine Student Association Logo" style={{width: '100%'}}/>
@@ -29,21 +31,22 @@ function CardComponent() {
                 </script>
                 <div>
                     <h1 className="card-business-name">
-                        Business Name
+                        {buisnessName}
                     </h1>
                 </div>
                 <div>
                     <p className="card-business-rating">
-                        Rating of Business
+                        Rating: {rating}
                     </p>
                 </div>
                 <div>
                     <p className="card-business-description">
-                        Description of Business
+                        {description}
                     </p>
                 </div>
             </div>
         </button>
+        </Link>
     );
 }
 

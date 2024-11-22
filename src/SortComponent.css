@@ -9,3 +9,7 @@
 .sorting sort_component{
     padding-left: 3cm;
 }
+
+.sorting_criteria:hover {
+    cursor: pointer;
+}
