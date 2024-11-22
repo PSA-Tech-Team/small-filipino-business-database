@@ -3,8 +3,8 @@ import './Filter_Bar.css'
 function Filter_Bar() {    
       return (
         <div className='filter'>
-          <h1>Filter Categories</h1>
-          <h3>Type of Business</h3>
+          <h1>Filter</h1>
+          <h3>Business Type</h3>
             <input type="checkbox"></input>
             <label> Food/Drink </label>
             <br></br>
