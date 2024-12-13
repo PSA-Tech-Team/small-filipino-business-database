@@ -44,8 +44,28 @@
     font-size: 0.65vw;
     font-family: Garamond, serif;
     color: #ffffff;
-    width: 15vh;
+    width: 16vh;
     height: 90vh;
     background-color: #85aba8;
     border-radius: 10px;
+  }
+
+  .filter h3 {
+    font-size: 1vw;
+    margin-top: 1vw;
+  }
+
+  .filter label {
+    font-size: 0.8vw;
+  }
+
+  .margins {
+    margin: 1vw;
+  }
+
+  .types {
+    display: flex; /* Use flexbox for better alignment */
+    align-items: center; /* Vertically align elements */
+    gap: 1px; /* Add space between label and checkbox */
+    margin-bottom: 1vw;
   }

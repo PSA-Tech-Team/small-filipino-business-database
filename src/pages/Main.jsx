@@ -21,6 +21,34 @@ function Main() {
             .catch(error => console.error("API error:", error));
     }, []);
 
+    // Handle Sorting
+    const handleSortChange = (criteria) => {
+        let sortedData = [...filteredData];
+        switch (criteria) {
+            case "Name A-Z":
+                sortedData.sort((a, b) => a.business_name.localeCompare(b.business_name));
+                break;
+            case "Name Z-A":
+                sortedData.sort((a, b) => b.business_name.localeCompare(a.business_name));
+                break;
+            case "High to Low Ratings":
+                sortedData.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+                break;
+            case "Low to High Ratings":
+                sortedData.sort((a, b) => (a.rating || 0) - (b.rating || 0));
+                break;
+            case "Date Added":
+                sortedData.sort((a, b) => new Date(b.date_added) - new Date(a.date_added)); // Assuming `date_added` is part of the data
+                break;
+            // case "Location":
+            //     sortedData.sort((a, b) => a.location.localeCompare(b.location)); // Assuming `location` is part of the data
+            //     break;
+            default:
+                sortedData = [...allBusinesses]; // Reset to default if no valid criteria
+        }
+        setFilteredData(sortedData);
+    };
+
     // Handle Search Query
     function printSearchQuery(query) {
         let tempDatabase = allBusinesses.slice();
@@ -28,16 +56,37 @@ function Main() {
         setFilteredData(tempDatabase);
     }
 
+
+    const applyFilters = (filters) => {
+        let updatedData = [...allBusinesses];
+
+        // Filter by type
+        if (filters.type.length > 0) {
+            updatedData = updatedData.filter((business) =>
+                filters.type.includes(business.type)
+            );
+        }
+
+        // Filter by rating
+        if (filters.rating.length > 0) {
+            updatedData = updatedData.filter((business) =>
+                filters.rating.includes(Math.floor(business.rating))
+            );
+        }
+
+        setFilteredData(updatedData);
+    };
+
     return (
         <div>
             <SearchBarComponent onSendSearchQuery={printSearchQuery} />
             <div className="columnContainer">
                 <div className="container">
-                    <SortComponent />
+                    <SortComponent onSortChange={handleSortChange}/>
                 </div>
             </div>
             <div className="container">
-                <Filter_Bar />
+                <Filter_Bar onFilterChange={applyFilters}/>
                 <div className="cards">
                     {parseDatabase(filteredData)}
                 </div>

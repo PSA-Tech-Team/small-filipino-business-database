@@ -41,7 +41,7 @@ function CardComponent( {buisnessName, rating, description} ) {
                 </div>
                 <div>
                     <p className="card-business-description">
-                        {description}
+                        {description.substring(0, 110)}...
                     </p>
                 </div>
             </div>

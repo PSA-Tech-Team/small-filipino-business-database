@@ -1,11 +1,15 @@
 import './SortComponent.css'
 
-function SortComponent(){
+function SortComponent( {onSortChange}){
+    const handleSortChange = (event) => {
+        onSortChange(event.target.value);
+    };
+
 
     return(
         <div class="sorting">
             <label for="sort_component">Sort By:</label>
-            <select name="sorting_criteria" class="sorting_criteria">    
+            <select name="sorting_criteria" class="sorting_criteria" onChange={handleSortChange}>    
                 <option value="blank"> </option> 
                 <option value="Name A-Z">Name (A-Z)</option>
                 <option value="Name Z-A">Name (Z-A)</option>
