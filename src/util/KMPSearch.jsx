@@ -2,6 +2,8 @@ class KMPSearch {
     // Search frequency of pattern within a given string, returns the frequency of pattern
     static kmpSearch(pattern, toSearch) {
         if (pattern === "" || toSearch === "") return 0; 
+        // if (!pattern.includes(toSearch)) return 0;
+
 
         let ret_val = 0;
         let piTable = [].concat(['x'],this.kmpTable(pattern));

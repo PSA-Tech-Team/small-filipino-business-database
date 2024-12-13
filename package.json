@@ -11,7 +11,7 @@
     "react-dom": "^18.3.1",
     "react-login-page": "^1.0.4",
     "react-router-dom": "^6.28.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "small-business-database": "file:",
     "styled-components": "^6.1.13",
     "web-vitals": "^2.1.4"

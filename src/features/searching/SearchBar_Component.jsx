@@ -2,24 +2,25 @@ import { useEffect, useState } from "react";
 import "./SearchBar_Component.css";
 
 function SearchBarComponent({ onSendSearchQuery }) {
+
+    const [inputValue, setInputValue] = useState("");
+
+    const handleEnterSend = (e) => { 
+        if (e.key !== "Enter") {
+           return;
+        }
+        onSendSearchQuery(inputValue);
+        setInputValue("");
+    }
     
-    useEffect(() => {
-        const searchInput = document.querySelector(".search-input");
-
-        searchInput.addEventListener("keydown", (e) => {
-            const enterKey = 13
-            if (e.keyCode != enterKey) return;
-
-            let value = (e.target.value).trim().replace(/ +(?= )/g,'');
-            // console.log("Value: ", value);
-            onSendSearchQuery(value);
-        });
-    });
 
     return(
         <div className="searchbar">
             <span class="search-icon material-symbols-outlined"></span>
-            <input class="search-input" type="search" placeholder="Search Business"/>
+            <input type="text" className="search-input" placeholder="Search for a business..."
+                onChange={(e) => setInputValue(e.target.value.toLowerCase())} 
+                onKeyDown={handleEnterSend}
+            />
         </div>
     );   
 }

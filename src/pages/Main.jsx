@@ -23,7 +23,6 @@ function Main() {
 
     // Handle Search Query
     function printSearchQuery(query) {
-        console.log("Query: ", query);
         let tempDatabase = allBusinesses.slice();
         tempDatabase.sort((a, b) => compareBuisnessesFromQuery(query, a, b));
         setFilteredData(tempDatabase);
@@ -59,9 +58,12 @@ function parseDatabase(database) {
     ));
 }
 
-function compareBuisnessesFromQuery(searchQuery, firstBuisness, secondBuisness) {
-    let firstTitleFrequency = KMPSearch.kmpSearch(searchQuery, firstBuisness.buissness_name);
-    let secondTitleFrequency = KMPSearch.kmpSearch(searchQuery, secondBuisness.buisness_name);
+function compareBuisnessesFromQuery(searchQuery, firstBusiness, secondBusiness) {
+
+    
+    let firstTitleFrequency = KMPSearch.kmpSearch(searchQuery, firstBusiness.business_name.toLowerCase());
+    let secondTitleFrequency = KMPSearch.kmpSearch(searchQuery, secondBusiness.business_name.toLowerCase());
+
 
     if (firstTitleFrequency > secondTitleFrequency) {
         return -1;
@@ -69,9 +71,14 @@ function compareBuisnessesFromQuery(searchQuery, firstBuisness, secondBuisness) 
         return 1;
     }
 
-    let firstDescFrequency = KMPSearch.kmpSearch(searchQuery, firstBuisness.description);
-    let secondDescFrequency = KMPSearch.kmpSearch(searchQuery, secondBuisness.description);
 
+    let firstDescFrequency = KMPSearch.kmpSearch(searchQuery, firstBusiness.description.toLowerCase());
+    let secondDescFrequency = KMPSearch.kmpSearch(searchQuery, secondBusiness.description.toLowerCase());
+
+
+    if (firstDescFrequency !== 0) {
+        console.log("First Desc Frequency: ", firstDescFrequency, secondDescFrequency, firstDescFrequency - secondDescFrequency);
+    }
     return secondDescFrequency - firstDescFrequency;
 }
 
