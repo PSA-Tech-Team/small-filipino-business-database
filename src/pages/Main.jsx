@@ -9,6 +9,8 @@ import KMPSearch from "../util/KMPSearch"
 
 function Main() {
     const [filteredData, setFilteredData] = useState([]); // Dynamic data
+    const [filterCriteria, setFilterCriteria] = useState(""); // Filter criteria
+    const [searchQuery, setSearchQuery] = useState(""); // Search query
     const [allBusinesses, setAllBusinesses] = useState([]); // All fetched data
 
     // Fetch businesses on mount
@@ -23,39 +25,39 @@ function Main() {
 
     // Handle Sorting
     const handleSortChange = (criteria) => {
-        let sortedData = [...filteredData];
-        switch (criteria) {
-            case "Name A-Z":
-                sortedData.sort((a, b) => a.business_name.localeCompare(b.business_name));
-                break;
-            case "Name Z-A":
-                sortedData.sort((a, b) => b.business_name.localeCompare(a.business_name));
-                break;
-            case "High to Low Ratings":
-                sortedData.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-                break;
-            case "Low to High Ratings":
-                sortedData.sort((a, b) => (a.rating || 0) - (b.rating || 0));
-                break;
-            case "Date Added":
-                sortedData.sort((a, b) => new Date(b.date_added) - new Date(a.date_added)); // Assuming `date_added` is part of the data
-                break;
-            // case "Location":
-            //     sortedData.sort((a, b) => a.location.localeCompare(b.location)); // Assuming `location` is part of the data
-            //     break;
-            default:
-                sortedData = [...allBusinesses]; // Reset to default if no valid criteria
-        }
-        setFilteredData(sortedData);
+        setFilterCriteria(criteria);
+        printSearchQuery(searchQuery);
     };
 
     // Handle Search Query
     function printSearchQuery(query) {
+        setSearchQuery(query);
         let tempDatabase = allBusinesses.slice();
-        tempDatabase.sort((a, b) => compareBuisnessesFromQuery(query, a, b));
+        tempDatabase.sort((a, b) => {
+            let queryComparison = compareBuisnessesFromQuery(query, a, b)
+
+            if (queryComparison !== 0) {
+                return queryComparison;
+            } else {
+                switch (filterCriteria) {
+                    
+                    case "Name Z-A":
+                        return b.business_name.localeCompare(a.business_name);
+                    case "High to Low Ratings":
+                        return (b.rating || 0) - (a.rating || 0);
+                    case "Low to High Ratings":
+                        return (a.rating || 0) - (b.rating || 0);
+                    case "Date Added":
+                        return new Date(b.date_added) - new Date(a.date_added); // Assuming `date_added` is part of the data
+                    case "Name A-Z":
+                    default:
+                        return a.business_name.localeCompare(b.business_name);
+                }
+            }
+
+        });
         setFilteredData(tempDatabase);
     }
-
 
     const applyFilters = (filters) => {
         let updatedData = [...allBusinesses];
@@ -75,6 +77,7 @@ function Main() {
         }
 
         setFilteredData(updatedData);
+        printSearchQuery(searchQuery);
     };
 
     return (
@@ -108,11 +111,8 @@ function parseDatabase(database) {
 }
 
 function compareBuisnessesFromQuery(searchQuery, firstBusiness, secondBusiness) {
-
-    
     let firstTitleFrequency = KMPSearch.kmpSearch(searchQuery, firstBusiness.business_name.toLowerCase());
     let secondTitleFrequency = KMPSearch.kmpSearch(searchQuery, secondBusiness.business_name.toLowerCase());
-
 
     if (firstTitleFrequency > secondTitleFrequency) {
         return -1;
@@ -120,14 +120,9 @@ function compareBuisnessesFromQuery(searchQuery, firstBusiness, secondBusiness) 
         return 1;
     }
 
-
     let firstDescFrequency = KMPSearch.kmpSearch(searchQuery, firstBusiness.description.toLowerCase());
     let secondDescFrequency = KMPSearch.kmpSearch(searchQuery, secondBusiness.description.toLowerCase());
 
-
-    if (firstDescFrequency !== 0) {
-        console.log("First Desc Frequency: ", firstDescFrequency, secondDescFrequency, firstDescFrequency - secondDescFrequency);
-    }
     return secondDescFrequency - firstDescFrequency;
 }
 
