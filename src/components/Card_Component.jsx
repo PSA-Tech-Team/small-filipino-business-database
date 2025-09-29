@@ -8,7 +8,7 @@ import "../assets/Card_Component.css";
 import axios from "axios";
 
 
-function WebsitePreview({ websiteURL }) {
+function WebsitePreview({ websiteURL, width, height }) {
     const [previewData, setPreviewData] = useState(null);
     const [error, setError] = useState(false);
   
@@ -50,21 +50,7 @@ function WebsitePreview({ websiteURL }) {
     }
   
     if (!previewData) return <p>Loading preview...</p>;
-    if (websiteURL == "https://instagram.com/lorens._.macarons") {
-        return (
-            <div
-              className="website-preview"
-              style={{
-              }}
-            >
-                <img
-                  src="https://drive.google.com/file/d/1qUY0iixXAeHNqbr0zSlxncufxfb40DIg/view?usp=sharing"
-                  alt="Preview"
-                  style={{ width: "300px", height: "300px",borderRadius: "100%", marginBottom: "10px" }}
-                />
-            </div>
-          );
-    }
+
     return (
       <div
         className="website-preview"
@@ -75,23 +61,24 @@ function WebsitePreview({ websiteURL }) {
         //   maxWidth: "300px"
         }}
       >
-        {previewData.image?.url && (
-          <img
-            src={previewData.image.url}
-            alt="Preview"
-            style={{ width: "300px", height: "300px",borderRadius: "100%", marginBottom: "10px" }}
-          />
+        {previewData.image?.url && (<img
+          src={previewData.image.url}
+          alt="Preview"
+          style={{ width: `${width}px`, height: `${height}px`, borderRadius: "100%", marginBottom: "10px" }}
+        />
+          
         )}
       </div>
     );
   }
-
+export {WebsitePreview};
   
 function WebsiteIsInvalid(businessName) {
     let invalid = [
         "Adeling", "Amber Agave", "Bongga Co.", "Filipinta", "HaribyArt", "Kilig Candles Co.",
         "Masiramon Chicago", "Pinny Planet", "Sage Rose Co.", "Unreleased Grounds", "Wounded Healing Art",
-        "YPArtistry", "Carina\'s Cupcakery", "Fernwood Barbers", "Ampilfied Apparel", "Chorva Co."
+        "YPArtistry", "Carina\'s Cupcakery", "Fernwood Barbers", "Ampilfied Apparel", "Chorva Co.",
+        "843/Eight Four Three"
     ]
     return invalid.includes(businessName)
 }
@@ -121,6 +108,8 @@ function NoWebsiteOrIG(businessName) {
     return l.includes(businessName)
 
 }
+
+export {NoWebsiteOrIG};
 
 function InstagramBlockquoteEmbed({url, width, height}) {
     // Instagram's embed script only processes new blockquotes once when initially loaded
@@ -213,7 +202,7 @@ function CardComponent({ businessName, rating, description, website, instagram})
             <div className="rotating">
                 {(!website || WebsiteIsInvalid(businessName)) && (
                 <div className="center-preview">
-                    <WebsitePreview websiteURL={website} />
+                    <WebsitePreview websiteURL={website} width={300} height={300}/>
                     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     <br/><br/><br/><br/><br/><br/>
                 </div>
@@ -221,7 +210,8 @@ function CardComponent({ businessName, rating, description, website, instagram})
             </div>
             )}
 
-        {instagram && AddedIG(businessName) && businessName != "Loren\'s Macarons" && (
+        {instagram && businessName != "Loren\'s Macarons" &&  businessName != "843/Eight Four Three" 
+        && businessName != "Andreen\'s Cookies" && (
             <div>
                 <InstagramBlockquoteEmbed 
                 url={cleanedInstagram} 
@@ -231,32 +221,23 @@ function CardComponent({ businessName, rating, description, website, instagram})
                 {/* <div class="loader"></div> */}
             </div>
         )}
-        {/* {businessName == "Loren\'s Macarons" && (
-            <div className="rotating">
-            <div className="center-preview">
-            <iframe src="https://drive.google.com/file/d/1qUY0iixXAeHNqbr0zSlxncufxfb40DIg/preview" width="325" height="325" >
-            </iframe>  
-            </div>
-            <br></br><br></br><br></br><br></br><br></br>
-            </div>)
-            } */}
         
         {businessName == "Loren\'s Macarons" && (
-            <div className="iframe-container">
-            <iframe 
-            src={website}
-            title={`${businessName} Preview`}
-            width="101%"
-            height="460px"
-            zIndex="0"
-            className="cropped-iframe"
-            // transform="scale(0.1)"
-            ></iframe>
+            <div className="center-preview" style={{marginTop:"-18px", zIndex: "-1"}}>
+            <iframe src="https://drive.google.com/file/d/1Vi6WkMtNEcdqBeLFygy9zeoN5wTKZ0bm/preview" width="500" height="500"></iframe>
+            </div>
+        )}
+        {businessName == "843/Eight Four Three" && (
+            <div>
+            <div className="center-preview" style={{marginTop:"0px"}}>
+            <iframe src="https://drive.google.com/file/d/16lX4N2Je9hzYbs2O7ru3X2-iL1-E3q3k/preview" width="460" height="400"></iframe>
+            </div>
+            <br></br><br></br>
             </div>
         )}
 
         {businessName == "Andreen\'s Cookies" && (
-            <div className="center-preview" style={{marginTop:"-350px"}}>
+            <div className="center-preview" style={{marginTop:"-359px"}}>
                 <iframe src="https://drive.google.com/file/d/1fyBuYELVRvDgUPbHDj459l0eFEk2aSj-/preview" width="450" height="450"></iframe>
             </div>
         )}
@@ -264,7 +245,7 @@ function CardComponent({ businessName, rating, description, website, instagram})
 
 
           
-          {website && !WebsiteIsInvalid(businessName) && businessName != "Tita Bun Collective" && (
+          {/* {website && !WebsiteIsInvalid(businessName) && businessName != "Tita Bun Collective" && (
             <iframe 
             src={website}
             title={`${businessName} Preview`}
@@ -273,7 +254,7 @@ function CardComponent({ businessName, rating, description, website, instagram})
             zIndex="0"
             // transform="scale(0.1)"
             ></iframe>
-        )}
+        )} */}
 
 
           
